@@ -1,5 +1,5 @@
 # Competitive-Programming
 
-This is a testing of my new repositories, I will submit questions here along with solutions.
-You can try them out first and if you are not able to do them you can always come for help.
+This is a testing of my new repositories, I will submit solutions to some interesting problems.
+You can help by optimizing the code if you can.
 Mostly brute force approach will be done.
