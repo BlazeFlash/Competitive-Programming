@@ -1,0 +1,25 @@
+Replace Elements with Greatest Element on Right Side
+
+class Solution {
+public:
+    vector<int> replaceElements(vector<int>& arr) {
+        int x=arr.size(),z=arr[x-1];
+        for(int i=x-2;i>=0;i--)
+        {
+            
+            if(z>=arr[i])
+            {
+                arr[i]=z;
+            }
+            else
+            {
+                int temp=arr[i];
+                arr[i]=z;
+                z=temp;
+            }
+                
+        }
+        arr[x-1]=-1;
+        return arr;
+    }
+};
