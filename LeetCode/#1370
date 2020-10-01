@@ -2,13 +2,16 @@ Increasing Decreasing String
 
 class Solution {
 public:
+//A function to sort string
     string sortString(string s) {
+//array of size 26 to store 26 alphabets
         int *arr=new int[26]{};
         string g;
         char ch1='a',ch2='z';
         /*sort(s.begin(),s.end());
         while(!s.empty())
         {*/
+//Start a loop from 0 to length of string
         for(int i=0;i<s.size();i++)
         {
             arr[s[i]-97]++;
@@ -17,26 +20,32 @@ public:
             if(s[i]<ch2)
                 ch2=s[i];
         }
+//Variable r and l
         int r=ch1-97,l=ch2-97;
         for(int i=0;i<s.size();)
         {
             for(int j=l;j<=r;j++)
                 if(arr[j])
                 {
+//Pushing a value into the stack
                     g.push_back(j+97);
+//Incrementing the value of i
                     i++;
                     arr[j]--;
                 }
+//Starting a loop from j=r to l and keep on decrementing it
             for(int j=r;j>=l;j--)
                 if(arr[j])
                 {
+//Pushing a new value into the stack
                     g.push_back(j+97);
+//Increasing the value of i by 1 using postincrement operartor
                     i++;
                     arr[j]--;
                 }
         }
         
-            
+Finally returning the value of variable g  
            return g; 
     }
 };
