@@ -1,0 +1,34 @@
+Unique Email Addresses
+
+class Solution {
+public:
+    int numUniqueEmails(vector<string>& emails) {
+        set<string> s;
+        int k,c=0;
+        for(int i=0;i<emails.size();i++)
+        {
+            k=emails[i].find("@");
+            for(int j=0;j<k;j++)
+            {
+                if(emails[i][j]=='.')
+                {
+                    emails[i].erase(j,1);
+                    k--;
+                }
+                if(emails[i][j]=='+')
+                {
+                    emails[i].erase(j,k-j);
+                    break;
+                }
+            }
+            if(s.find(emails[i])==s.end())
+            {
+                c++;
+                s.insert(emails[i]);
+            }
+            //cout<<emails[i]<<endl;
+            //string z=
+        }
+        return c;
+    }
+};
