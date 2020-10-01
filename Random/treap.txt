@@ -1,0 +1,150 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef item * pitem;
+#define DEBUG
+
+#ifdef FASTIO
+#define IOS 
+
+#endif
+
+#ifndef FASTIO
+    #define IOS { ios :: sync_with_stdio(false); cin.tie(0); }
+#endif
+
+#ifdef DEBUG
+    #define dbg(s) {s;}
+#endif
+
+#ifndef DEBUG
+    #define dbg(s)
+#endif
+
+using namespace std;
+
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+int grand(int x) {
+    return uniform_int_distribution<int>(0, x - 1)(rng);
+}
+
+
+const int maxn = 1e6 + 7;
+
+const int inf = 1e15;
+
+const int md = 1e9 + 7;
+
+
+int gcd(int x, int y) {
+    if (x < y) return gcd(y, x);
+    if (y == 0) return x;
+    return gcd(y, x % y);
+} 
+
+
+typedef struct item * pitem;
+struct item {
+    int cnt, prior;
+    bool rev;
+    ll sum;
+    ll val;
+    item * l, * r;
+    item() { }
+    item (ll val) : prior(rand()), l(NULL), r(NULL), rev(false), sum(val), val(val) { }
+};
+
+int cnt (pitem it) {
+    return it ? it->cnt : 0;
+}
+
+ll gsum(pitem it) {
+    return it ? it -> sum : 0ll;
+}
+
+void upd_cnt (pitem it) {
+    if (it) {
+        it->cnt = cnt(it->l) + cnt(it->r) + 1;
+        it->sum = gsum(it->l) + gsum(it->r) + it->val;
+    }
+}
+
+void push (pitem it) {
+    if (it && it->rev) {
+        it->rev = false;
+        swap (it->l, it->r);
+        if (it->l)  it->l->rev ^= true;
+        if (it->r)  it->r->rev ^= true;
+    }
+}
+
+void merge (pitem & t, pitem l, pitem r) {
+    push (l);
+    push (r);
+    if (!l || !r)
+        t = l ? l : r;
+    else if (l->prior > r->prior)
+        merge (l->r, l->r, r),  t = l;
+    else
+        merge (r->l, l, r->l),  t = r;
+    upd_cnt (t);
+}
+
+void split (pitem t, pitem & l, pitem & r, int key, int add = 0) {
+    if (!t)
+        return void( l = r = 0 );
+    push (t);
+    int cur_key = add + cnt(t->l);
+    if (key <= cur_key)
+        split (t->l, l, t->l, key, add),  r = t;
+    else
+        split (t->r, t->r, r, key, add + 1 + cnt(t->l)),  l = t;
+    upd_cnt (t);
+}
+
+void reverse (pitem t, int l, int r) {
+    pitem t1, t2, t3;
+    split (t, t1, t2, l);
+    split (t2, t2, t3, r-l+1);
+    t2->rev ^= true;
+    merge (t, t1, t2);
+    merge (t, t, t3);
+}
+
+
+void revrange(pitem& root, pitem& root2, int l, int r) {
+    pitem P, Q, R, S;
+            split(root, P, Q, l);
+            split(Q, R, S, r - l + 1);
+    
+    pitem P2, Q2, R2, S2;
+            split(root2, P2, Q2, l);
+            split(Q2, R2, S2, r - l + 1);
+            
+    R -> rev = !(R -> rev);
+    R2 -> rev = !(R2 -> rev);
+            // P, R, S
+            pitem W, W2;
+            merge(W, P, R2);
+            root = NULL;
+            merge(root, W, S);
+            
+            merge(W2, P2, R);
+            root2 = NULL;
+            merge(root2, W2, S2);
+}
+
+void ins(pitem& root, ll x) {
+    pitem Z; merge(Z, root, new item(x));
+    root = Z;
+}
+
+ll range_query(pitem t, int l, int r) {
+    pitem L,mid,R;
+    split(t,L,mid,l);
+    split(mid,t,R,r-l+1);//note: r-l!!
+    ll ans = t->sum;
+    merge(mid,L,t);
+    merge(t,mid,R);
+    return ans;
+}
+
