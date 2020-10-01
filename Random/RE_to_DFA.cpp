@@ -842,10 +842,10 @@ int main() {
     dfa_state = min_dfa(dfa_tab, dfa_state, mdfa);
     print_mdfa_table(mdfa, dfa_state);
 
-    string word = "abb";
+    /*string word = "abb";
     cout << "check whether regular expression ends with abb or not." << endl;
 
-    simulator(mdfa, word, dfa_state, s);
+    simulator(mdfa, word, dfa_state, s);*/
 
     return 0;
 }
