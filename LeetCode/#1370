@@ -1,0 +1,42 @@
+Increasing Decreasing String
+
+class Solution {
+public:
+    string sortString(string s) {
+        int *arr=new int[26]{};
+        string g;
+        char ch1='a',ch2='z';
+        /*sort(s.begin(),s.end());
+        while(!s.empty())
+        {*/
+        for(int i=0;i<s.size();i++)
+        {
+            arr[s[i]-97]++;
+            if(s[i]>ch1)
+                ch1=s[i];
+            if(s[i]<ch2)
+                ch2=s[i];
+        }
+        int r=ch1-97,l=ch2-97;
+        for(int i=0;i<s.size();)
+        {
+            for(int j=l;j<=r;j++)
+                if(arr[j])
+                {
+                    g.push_back(j+97);
+                    i++;
+                    arr[j]--;
+                }
+            for(int j=r;j>=l;j--)
+                if(arr[j])
+                {
+                    g.push_back(j+97);
+                    i++;
+                    arr[j]--;
+                }
+        }
+        
+            
+           return g; 
+    }
+};
