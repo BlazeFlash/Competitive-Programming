@@ -1,0 +1,19 @@
+Reverse Words in a String III
+
+class Solution {
+public:
+    string reverseWords(string s) {
+        int k,e=-1;
+        while((k=s.find(" ",e+1))!=string::npos )
+        {
+            string z=s.substr(e+1,k-e-1);
+            reverse(z.begin(),z.end());
+            s.replace(e+1,k-e-1,z);
+            e=k;     
+        }
+        string z=s.substr(e+1,s.size()-e-1);
+            reverse(z.begin(),z.end());
+            s.replace(e+1,s.size()-e-1,z);
+        return s;
+    }
+};
