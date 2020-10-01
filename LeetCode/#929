@@ -1,34 +1,47 @@
 Unique Email Addresses
-
+//A Program to find the number of unique mails
 class Solution {
 public:
+// A function which receives a vector of strings
     int numUniqueEmails(vector<string>& emails) {
+// Declare a set s of string data type
         set<string> s;
+// declare two variables k and c
         int k,c=0;
+        //Initialize c with 0
         for(int i=0;i<emails.size();i++)
         {
+        //Start a loop from  to mails.size()
             k=emails[i].find("@");
             for(int j=0;j<k;j++)
             {
-                if(emails[i][j]=='.')
+//check if value is equal to character .
+            if(emails[i][j]=='.')
                 {
+//Erase the value
                     emails[i].erase(j,1);
+//Decrement the value of variable k
                     k--;
                 }
+//check if value is equal to character '+'
                 if(emails[i][j]=='+')
                 {
                     emails[i].erase(j,k-j);
+//break is used to terminate
                     break;
                 }
             }
             if(s.find(emails[i])==s.end())
             {
+//Increase the value of c by 1
                 c++;
                 s.insert(emails[i]);
             }
+//Printing the value of mails
             //cout<<emails[i]<<endl;
             //string z=
         }
+// Return the value of variable c
         return c;
     }
 };
