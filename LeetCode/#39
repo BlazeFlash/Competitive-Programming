@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> combinations;
+        vector<int> current;
+        backtrack(candidates, target, 0, current, combinations);
+        return combinations;
+    }
+    
+private:
+    void backtrack(vector<int>& candidates, int target, int index, vector<int>& current, vector<vector<int>>& combinations) {
+        if (target == 0) {
+            combinations.push_back(current);
+            return;
+        }
+        if (target < 0 || index >= candidates.size()) return;
+        current.push_back(candidates[index]);
+        backtrack(candidates, target - current.back(), index, current, combinations);
+        current.pop_back();
+        backtrack(candidates, target, index + 1, current, combinations);
+    }
+};
